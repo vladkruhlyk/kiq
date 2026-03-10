@@ -37,28 +37,27 @@
   .left-overlay { position: absolute; inset: 0; background: linear-gradient(110deg, rgba(18,18,20,0.93) 45%, rgba(18,18,20,0.65) 100%); }
   .left-content { position: relative; z-index: 1; width: 100%; }
 
-  .eyebrow { font-size: 13px; font-weight: 500; color: var(--gray); margin-bottom: 20px; }
-  h1 { font-size: clamp(44px, 5vw, 68px); font-weight: 900; line-height: 1.0; letter-spacing: -2.5px; color: var(--white); margin-bottom: 20px; }
-  .subhead { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 24px; line-height: 1.5; }
+  .logo { font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; }
+  h1 { font-size: clamp(36px, 4.5vw, 62px); font-weight: 900; line-height: 1.05; letter-spacing: -2px; color: var(--white); margin-bottom: 20px; }
+  .subhead { font-size: 15px; font-weight: 500; color: var(--gray); margin-bottom: 24px; line-height: 1.6; }
   .checks { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 14px; }
-  .check { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: var(--white); }
-  .check-icon { width: 22px; height: 22px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .features { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-bottom: 36px; }
-  .feat { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--gray); }
-  .phone { font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; text-decoration: none; }
+  .check { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--white); }
+  .check-icon { width: 20px; height: 20px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .features { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-bottom: 28px; }
+  .feat { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--gray); }
+  .phone { font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; text-decoration: none; margin-bottom: 28px; display: inline-block; }
   .phone:hover { opacity: 0.75; }
+  .clients-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .clients { display: flex; flex-wrap: wrap; gap: 8px; }
+  .client-tag { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 100px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); transition: background 0.2s; }
+  .client-tag:hover { background: rgba(255,255,255,0.12); }
 
   .right { width: 440px; flex-shrink: 0; background: var(--bg2); border-left: 1px solid var(--border); padding: 40px 36px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
   .form-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); margin-bottom: 5px; }
   .form-sub { font-size: 13px; color: var(--gray); margin-bottom: 22px; line-height: 1.5; }
   .form-group { margin-bottom: 10px; }
   .form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--gray); margin-bottom: 5px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%; background: var(--input-bg); border: 1px solid var(--input-border);
-    border-radius: 8px; padding: 12px 13px; font-family: 'Inter', sans-serif;
-    font-size: 14px; font-weight: 500; color: var(--white); outline: none;
-    transition: border-color 0.2s, background 0.2s; appearance: none;
-  }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 12px 13px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--white); outline: none; transition: border-color 0.2s, background 0.2s; appearance: none; }
   .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.22); }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--input-focus); background: rgba(255,255,255,0.1); }
   .form-group select option { background: #2a2a2c; }
@@ -75,7 +74,7 @@
 
   @media (max-width: 900px) {
     .wrapper { flex-direction: column; height: auto; }
-    .left { padding: 48px 24px; min-height: 60vh; }
+    .left { padding: 48px 24px; min-height: 70vh; }
     .right { width: 100%; border-left: none; border-top: 1px solid var(--border); padding: 36px 24px; }
     .lang-switcher { top: 12px; right: 12px; }
   }
@@ -98,120 +97,61 @@
 </div>
 
 <script>
-const CHECK_SVG = `<svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#1C1C1E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-
-const content = {
-  ru: {
-    eyebrow: 'Международная оптовая компания по поставке витаминов и БАДов',
-    h1: 'KIQ Labs<br>Global',
-    subhead: 'Поставляем продукцию из США и Европы<br>для дистрибьюторов и розничных сетей',
-    checks: ['Европа', 'MENA', 'СНГ'],
-    features: ['📦 Оптовые поставки', '🏢 Официальное представительство', '📍 Private Label'],
-    phone: '+1 (312) 681-7103',
-    formTitle: 'Получить коммерческое предложение',
-    formSub: 'Ответим в течение 2 часов с персональным прайсом',
-    labels: ['Имя', 'Компания', 'Email', 'Телефон / WhatsApp', 'Тип бизнеса', 'Комментарий'],
-    placeholders: ['Иван', 'ООО «Название»', 'example@company.com', '+7 (___) ___-__-__', '', 'Интересующие бренды, объём, регион...'],
-    selectPlaceholder: 'Выберите тип',
-    selectOptions: ['Дистрибьютор', 'Розничная сеть', 'Интернет-магазин', 'Аптечная сеть', 'Private Label', 'Другое'],
-    submitBtn: 'Получить прайс →',
-    submitDone: '✓ Заявка отправлена!',
-    trust: '🔒 Данные защищены. Никакого спама.',
-    title: 'KIQ Labs Global',
-  },
-  en: {
-    eyebrow: 'International wholesale company supplying vitamins & supplements',
-    h1: 'KIQ Labs<br>Global',
-    subhead: 'We supply products from the USA & Europe<br>for distributors and retail chains',
-    checks: ['Europe', 'MENA', 'CIS'],
-    features: ['📦 Wholesale supply', '🏢 Official representation', '📍 Private Label'],
-    phone: '+1 (312) 681-7103',
-    formTitle: 'Get a commercial offer',
-    formSub: "We'll respond within 2 hours with a personal price list",
-    labels: ['Name', 'Company', 'Email', 'Phone / WhatsApp', 'Business type', 'Comment'],
-    placeholders: ['John', 'Company Ltd.', 'example@company.com', '+1 (___) ___-____', '', 'Brands of interest, volume, region...'],
-    selectPlaceholder: 'Select type',
-    selectOptions: ['Distributor', 'Retail chain', 'Online store', 'Pharmacy chain', 'Private Label', 'Other'],
-    submitBtn: 'Get price list →',
-    submitDone: '✓ Request sent!',
-    trust: '🔒 Your data is protected. No spam.',
-    title: 'KIQ Labs Global',
-  }
-};
-
+const CHECK_SVG = '<svg width="11" height="8" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#1C1C1E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const content = {"ru": {"logo": "KIQ Labs Global", "h1": "Откройте доступ к 150+\nбрендам витаминов\nиз США и Европы", "subhead": "Поставляем продукцию напрямую для дистрибьюторов и розничных сетей.\nЕвропа, MENA, СНГ — официально и без переплат.", "checks": ["Европа", "MENA", "СНГ"], "features": ["📦 Оптовые поставки", "🏢 Официальное представительство", "📍 Private Label"], "phone": "+1 (312) 681-7103", "clientsLabel": "Работаем с:", "clients": [{"icon": "💊", "label": "Аптечные сети"}, {"icon": "🛒", "label": "Интернет-магазины"}, {"icon": "🏪", "label": "Розничные сети"}, {"icon": "🚚", "label": "Дистрибьюторы"}, {"icon": "🏋️", "label": "Фитнес-бренды"}, {"icon": "🏷️", "label": "Private Label"}], "formTitle": "Получить коммерческое предложение", "formSub": "Ответим в течение 2 часов с персональным прайсом", "labels": ["Имя", "Компания", "Email", "Телефон / WhatsApp", "Тип бизнеса", "Комментарий"], "placeholders": ["Иван", "ООО Название", "example@company.com", "+7 (___) ___-__-__", "", "Интересующие бренды, объём, регион..."], "selectPlaceholder": "Выберите тип", "selectOptions": ["Дистрибьютор", "Розничная сеть", "Интернет-магазин", "Аптечная сеть", "Private Label", "Другое"], "submitBtn": "Получить прайс →", "submitDone": "✓ Заявка отправлена!", "trust": "🔒 Данные защищены. Никакого спама."}, "en": {"logo": "KIQ Labs Global", "h1": "Get access to 150+\nvitamin brands\nfrom the USA & Europe", "subhead": "We supply products directly for distributors and retail chains.\nEurope, MENA, CIS — official import, no middlemen.", "checks": ["Europe", "MENA", "CIS"], "features": ["📦 Wholesale supply", "🏢 Official representation", "📍 Private Label"], "phone": "+1 (312) 681-7103", "clientsLabel": "We work with:", "clients": [{"icon": "💊", "label": "Pharmacy chains"}, {"icon": "🛒", "label": "Online stores"}, {"icon": "🏪", "label": "Retail chains"}, {"icon": "🚚", "label": "Distributors"}, {"icon": "🏋️", "label": "Fitness brands"}, {"icon": "🏷️", "label": "Private Label"}], "formTitle": "Get a commercial offer", "formSub": "We will respond within 2 hours with a personal price list", "labels": ["Name", "Company", "Email", "Phone / WhatsApp", "Business type", "Comment"], "placeholders": ["John", "Company Ltd.", "example@company.com", "+1 (___) ___-____", "", "Brands of interest, volume, region..."], "selectPlaceholder": "Select type", "selectOptions": ["Distributor", "Retail chain", "Online store", "Pharmacy chain", "Private Label", "Other"], "submitBtn": "Get price list →", "submitDone": "Request sent!", "trust": "Your data is protected. No spam."}};
 let currentLang = 'ru';
 
 function renderLeft(lang) {
   const c = content[lang];
-  return `
-    <p class="eyebrow">${c.eyebrow}</p>
-    <h1>${c.h1}</h1>
-    <p class="subhead">${c.subhead}</p>
-    <div class="checks">
-      ${c.checks.map(ch => `<div class="check"><div class="check-icon">${CHECK_SVG}</div>${ch}</div>`).join('')}
-    </div>
-    <div class="features">
-      ${c.features.map(f => `<div class="feat">${f}</div>`).join('')}
-    </div>
-    <a href="tel:+13126817103" class="phone">${c.phone}</a>
-  `;
+  return [
+    '<div class="logo">' + c.logo + '</div>',
+    '<h1>' + c.h1.replace(/\n/g, '<br>') + '</h1>',
+    '<p class="subhead">' + c.subhead.replace(/\n/g, '<br>') + '</p>',
+    '<div class="checks">' + c.checks.map(ch => '<div class="check"><div class="check-icon">' + CHECK_SVG + '</div>' + ch + '</div>').join('') + '</div>',
+    '<div class="features">' + c.features.map(f => '<div class="feat">' + f + '</div>').join('') + '</div>',
+    '<a href="tel:+13126817103" class="phone">' + c.phone + '</a>',
+    '<div class="clients-label">' + c.clientsLabel + '</div>',
+    '<div class="clients">' + c.clients.map(cl => '<div class="client-tag"><span>' + cl.icon + '</span>' + cl.label + '</div>').join('') + '</div>',
+  ].join('');
 }
 
 function renderRight(lang) {
   const c = content[lang];
-  return `
-    <div class="form-title">${c.formTitle}</div>
-    <p class="form-sub">${c.formSub}</p>
-    <form onsubmit="handleSubmit(event)">
-      <div class="form-row">
-        <div class="form-group"><label>${c.labels[0]}</label><input type="text" placeholder="${c.placeholders[0]}"></div>
-        <div class="form-group"><label>${c.labels[1]}</label><input type="text" placeholder="${c.placeholders[1]}"></div>
-      </div>
-      <div class="form-group"><label>${c.labels[2]}</label><input type="email" placeholder="${c.placeholders[2]}"></div>
-      <div class="form-group"><label>${c.labels[3]}</label><input type="tel" placeholder="${c.placeholders[3]}"></div>
-      <div class="form-group">
-        <label>${c.labels[4]}</label>
-        <div class="select-wrap">
-          <select>
-            <option value="" disabled selected>${c.selectPlaceholder}</option>
-            ${c.selectOptions.map(o => `<option>${o}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-      <div class="form-group"><label>${c.labels[5]}</label><textarea placeholder="${c.placeholders[5]}"></textarea></div>
-      <button type="submit" class="submit-btn">${c.submitBtn}</button>
-      <div class="trust">${c.trust}</div>
-    </form>
-  `;
+  return [
+    '<div class="form-title">' + c.formTitle + '</div>',
+    '<p class="form-sub">' + c.formSub + '</p>',
+    '<form onsubmit="handleSubmit(event)">',
+    '<div class="form-row">',
+    '<div class="form-group"><label>' + c.labels[0] + '</label><input type="text" placeholder="' + c.placeholders[0] + '"></div>',
+    '<div class="form-group"><label>' + c.labels[1] + '</label><input type="text" placeholder="' + c.placeholders[1] + '"></div>',
+    '</div>',
+    '<div class="form-group"><label>' + c.labels[2] + '</label><input type="email" placeholder="' + c.placeholders[2] + '"></div>',
+    '<div class="form-group"><label>' + c.labels[3] + '</label><input type="tel" placeholder="' + c.placeholders[3] + '"></div>',
+    '<div class="form-group"><label>' + c.labels[4] + '</label><div class="select-wrap"><select><option value="" disabled selected>' + c.selectPlaceholder + '</option>' + c.selectOptions.map(o => '<option>' + o + '</option>').join('') + '</select></div></div>',
+    '<div class="form-group"><label>' + c.labels[5] + '</label><textarea placeholder="' + c.placeholders[5] + '"></textarea></div>',
+    '<button type="submit" class="submit-btn">' + c.submitBtn + '</button>',
+    '<div class="trust">' + c.trust + '</div>',
+    '</form>',
+  ].join('');
 }
 
 function applyLang(lang) {
   if (!content[lang]) lang = 'ru';
-  if (lang === currentLang) {
-    updateButtons(lang);
-    return;
-  }
   currentLang = lang;
-  updateButtons(lang);
-  document.title = content[lang].title;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.id === 'btn-' + lang);
+  });
   document.documentElement.lang = lang;
-
   const lc = document.getElementById('left-content');
   const rp = document.getElementById('right-panel');
   lc.classList.add('fading');
   rp.classList.add('fading');
-  setTimeout(() => {
+  setTimeout(function() {
     lc.innerHTML = renderLeft(lang);
     rp.innerHTML = renderRight(lang);
     lc.classList.remove('fading');
     rp.classList.remove('fading');
   }, 200);
-}
-
-function updateButtons(lang) {
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.id === 'btn-' + lang);
-  });
 }
 
 function handleSubmit(e) {
@@ -222,22 +162,13 @@ function handleSubmit(e) {
   btn.disabled = true;
 }
 
-// Hash routing
-function onHashChange() {
-  const hash = window.location.hash.replace('#', '') || 'ru';
-  applyLang(hash);
-}
+window.addEventListener('hashchange', function() {
+  applyLang(window.location.hash.replace('#', '') || 'ru');
+});
 
-window.addEventListener('hashchange', onHashChange);
-
-// Init
-const initLang = window.location.hash.replace('#', '') || 'ru';
+var initLang = window.location.hash.replace('#', '') || 'ru';
 if (!window.location.hash) window.location.hash = '#ru';
-currentLang = ''; // force render on init
-document.getElementById('left-content').innerHTML = renderLeft(initLang);
-document.getElementById('right-panel').innerHTML = renderRight(initLang);
-updateButtons(initLang);
-currentLang = initLang;
+applyLang(initLang);
 </script>
 </body>
 </html>
