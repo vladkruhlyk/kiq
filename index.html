@@ -246,6 +246,20 @@
     transition: opacity 0.2s, transform 0.15s;
   }
   .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .submit-btn:disabled {
+    cursor: default;
+    transform: none;
+  }
+
+  .form-status {
+    min-height: 20px;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--gray);
+  }
+  .form-status.is-error { color: #ff8f8f; }
+  .form-status.is-success { color: #a7f3b0; }
 
   .trust {
     display: flex;
@@ -344,61 +358,107 @@ src="https://www.facebook.com/tr?id=896211436574607&ev=PageView&noscript=1"
     <div class="form-title">Получить коммерческое предложение</div>
     <p class="form-sub">Ответим в течение 2 часов с персональным прайсом</p>
 
-    <form onsubmit="handleSubmit(event)">
+    <form id="lead-form" onsubmit="handleSubmit(event)">
       <div class="form-row">
         <div class="form-group">
           <label>Имя</label>
-          <input type="text" placeholder="Иван">
+          <input type="text" name="name" placeholder="Иван" required>
         </div>
         <div class="form-group">
           <label>Компания</label>
-          <input type="text" placeholder="ООО «Название»">
+          <input type="text" name="company" placeholder='ООО "Название"'>
         </div>
       </div>
 
       <div class="form-group">
         <label>Email</label>
-        <input type="email" placeholder="example@company.com">
+        <input type="email" name="email" placeholder="example@company.com" required>
       </div>
 
       <div class="form-group">
         <label>Телефон / WhatsApp</label>
-        <input type="tel" placeholder="+7 (___) ___-__-__">
+        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
       </div>
 
       <div class="form-group">
         <label>Тип бизнеса</label>
         <div class="select-wrap">
-          <select>
+          <select name="businessType" required>
             <option value="" disabled selected>Выберите тип</option>
-            <option>Дистрибьютор</option>
-            <option>Розничная сеть</option>
-            <option>Интернет-магазин</option>
-            <option>Аптечная сеть</option>
-            <option>Private Label</option>
-            <option>Другое</option>
+            <option value="Дистрибьютор">Дистрибьютор</option>
+            <option value="Розничная сеть">Розничная сеть</option>
+            <option value="Интернет-магазин">Интернет-магазин</option>
+            <option value="Аптечная сеть">Аптечная сеть</option>
+            <option value="Private Label">Private Label</option>
+            <option value="Другое">Другое</option>
           </select>
         </div>
       </div>
 
       <div class="form-group">
         <label>Комментарий</label>
-        <textarea placeholder="Интересующие бренды, объём, регион..."></textarea>
+        <textarea name="comment" placeholder="Интересующие бренды, объём, регион..."></textarea>
       </div>
 
       <button type="submit" class="submit-btn">Получить прайс →</button>
+      <div class="form-status" aria-live="polite"></div>
       <div class="trust">🔒 Данные защищены. Никакого спама.</div>
     </form>
   </aside>
 
 </div>
 <script>
-function handleSubmit(e) {
+const WEBHOOK_URL = 'https://hook.eu2.make.com/26jy5so8h4vqo3pbe0bltxm5prse0zya';
+
+async function handleSubmit(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('.submit-btn');
-  btn.textContent = '✓ Заявка отправлена!';
-  btn.style.opacity = '0.6';
+  const form = e.target;
+  const btn = form.querySelector('.submit-btn');
+  const status = form.querySelector('.form-status');
+  const formData = new FormData(form);
+  const payload = {
+    name: formData.get('name')?.toString().trim() || '',
+    company: formData.get('company')?.toString().trim() || '',
+    email: formData.get('email')?.toString().trim() || '',
+    phone: formData.get('phone')?.toString().trim() || '',
+    businessType: formData.get('businessType')?.toString().trim() || '',
+    comment: formData.get('comment')?.toString().trim() || '',
+    pageTitle: document.title,
+    pageUrl: window.location.href,
+    submittedAt: new Date().toISOString()
+  };
+
   btn.disabled = true;
+  btn.style.opacity = '0.6';
+  btn.textContent = 'Отправляем...';
+  status.textContent = 'Отправляем заявку...';
+  status.className = 'form-status';
+
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Webhook responded with ${response.status}`);
+    }
+
+    btn.textContent = '✓ Заявка отправлена!';
+    status.textContent = 'Спасибо! Заявка отправлена, мы свяжемся с вами в ближайшее время.';
+    status.className = 'form-status is-success';
+    form.reset();
+  } catch (error) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.textContent = 'Получить прайс →';
+    status.textContent = 'Не удалось отправить заявку. Проверьте webhook в Make и повторите попытку.';
+    status.className = 'form-status is-error';
+    console.error('Lead webhook error:', error);
+  }
 }
 </script>
 </body>
