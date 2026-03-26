@@ -369,6 +369,11 @@ src="https://www.facebook.com/tr?id=2210413383030948&ev=PageView&noscript=1"
 </div>
 <script>
 const WEBHOOK_URL = 'https://hook.eu2.make.com/26jy5so8h4vqo3pbe0bltxm5prse0zya';
+const THANK_YOU_URL = './thank-you.html';
+
+function redirectToThankYou() {
+  window.location.href = THANK_YOU_URL;
+}
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -436,7 +441,26 @@ async function handleSubmit(e) {
     status.textContent = 'Заявка отправлена. Перенаправляем...';
     status.className = 'form-status is-success';
     form.reset();
-    window.location.href = './thank-you.html';
+
+    if (typeof fbq === 'function') {
+      let redirected = false;
+      const safeRedirect = () => {
+        if (redirected) return;
+        redirected = true;
+        redirectToThankYou();
+      };
+
+      fbq('track', 'Lead', {
+        content_name: 'KIQ Labs Lead Form'
+      }, {
+        eventID: `lead-${Date.now()}`,
+        event_callback: safeRedirect
+      });
+
+      setTimeout(safeRedirect, 800);
+    } else {
+      redirectToThankYou();
+    }
   } catch (error) {
     btn.disabled = false;
     btn.style.opacity = '1';
