@@ -433,9 +433,10 @@ async function handleSubmit(e) {
     }
 
     btn.textContent = '✓ Заявка отправлена!';
-    status.textContent = 'Спасибо! Заявка отправлена, мы свяжемся с вами в ближайшее время.';
+    status.textContent = 'Заявка отправлена. Перенаправляем...';
     status.className = 'form-status is-success';
     form.reset();
+    window.location.href = './thank-you.html';
   } catch (error) {
     btn.disabled = false;
     btn.style.opacity = '1';
