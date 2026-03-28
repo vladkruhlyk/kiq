@@ -336,8 +336,8 @@ src="https://www.facebook.com/tr?id=2210413383030948&ev=PageView&noscript=1"
       </div>
 
       <div class="form-group">
-        <label>Телефон / WhatsApp</label>
-        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
+        <label>Telegram / Номер телефона</label>
+        <input type="text" name="telegram" placeholder="@username или +34..." required>
       </div>
 
       <div class="form-group">
@@ -385,12 +385,24 @@ async function handleSubmit(e) {
     name: formData.get('name')?.toString().trim() || '',
     company: formData.get('company')?.toString().trim() || '',
     email: formData.get('email')?.toString().trim() || '',
-    phone: formData.get('phone')?.toString().trim() || '',
+    telegram: formData.get('telegram')?.toString().trim() || '',
     businessType: formData.get('businessType')?.toString().trim() || '',
     comment: formData.get('comment')?.toString().trim() || '',
     pageTitle: document.title,
     pageUrl: window.location.href,
-    submittedAt: new Date().toISOString()
+    submittedAt: new Date().toISOString(),
+    integrations: {
+      keycrm: {
+        title: `Заявка от ${formData.get('name')?.toString().trim() || 'Аноним'}`,
+        source_id: 1,
+        manager_comment: `Компания: ${formData.get('company')?.toString().trim() || '-'}\nTelegram: ${formData.get('telegram')?.toString().trim() || '-'}\nТип бизнеса: ${formData.get('businessType')?.toString().trim() || '-'}\nКомментарий: ${formData.get('comment')?.toString().trim() || '-'}`,
+        contact: {
+          full_name: formData.get('name')?.toString().trim() || '',
+          email: formData.get('email')?.toString().trim() || '',
+          phone: formData.get('telegram')?.toString().trim() || ''
+        }
+      }
+    }
   };
 
   btn.disabled = true;
@@ -400,38 +412,13 @@ async function handleSubmit(e) {
   status.className = 'form-status';
 
   try {
-    const keycrmToken = 'Y2Q1MTE5NDRjMTVhYzI3M2IwNDZhYTczNzUxZTdhNTBmOWU5ZmI5YQ'; // KeyCRM API token
-    const keycrmPayload = {
-      title: `Заявка от ${payload.name || 'Аноним'}`,
-      source_id: 1,
-      manager_comment: `Компания: ${payload.company}\nТип бизнеса: ${payload.businessType}\nКомментарий: ${payload.comment}`,
-      contact: {
-        full_name: payload.name,
-        email: payload.email,
-        phone: payload.phone
-      }
-    };
-
-    const [response] = await Promise.all([
-      fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      }),
-      fetch('https://openapi.keycrm.app/v1/pipelines/cards', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-          'Authorization': `Bearer ${keycrmToken}`
-        },
-        body: JSON.stringify(keycrmPayload)
-      }).catch(err => console.error('KeyCRM Error:', err))
-    ]);
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
     if (!response.ok) {
       throw new Error(`Webhook responded with ${response.status}`);
