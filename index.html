@@ -369,6 +369,8 @@ src="https://www.facebook.com/tr?id=2210413383030948&ev=PageView&noscript=1"
 </div>
 <script>
 const WEBHOOK_URL = 'https://hook.eu2.make.com/26jy5so8h4vqo3pbe0bltxm5prse0zya';
+const KEYCRM_URL = 'https://openapi.keycrm.app/v1/pipelines/cards';
+const KEYCRM_TOKEN = 'Y2Q1MTE5NDRjMTVhYzI3M2IwNDZhYTczNzUxZTdhNTBmOWU5ZmI5YQ';
 const THANK_YOU_URL = './thank-you.html';
 
 function redirectToThankYou() {
@@ -412,7 +414,7 @@ async function handleSubmit(e) {
   status.className = 'form-status';
 
   try {
-    const response = await fetch(WEBHOOK_URL, {
+    const makeRequest = fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -420,8 +422,27 @@ async function handleSubmit(e) {
       body: JSON.stringify(payload)
     });
 
-    if (!response.ok) {
-      throw new Error(`Webhook responded with ${response.status}`);
+    const keycrmRequest = fetch(KEYCRM_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${KEYCRM_TOKEN}`,
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload.integrations.keycrm)
+    });
+
+    const [makeResponse, keycrmResponse] = await Promise.all([makeRequest, keycrmRequest]);
+
+    if (!makeResponse.ok) {
+      console.warn(`Make webhook responded with ${makeResponse.status}`);
+    }
+    if (!keycrmResponse.ok) {
+      console.warn(`KeyCRM responded with ${keycrmResponse.status}`);
+    }
+
+    if (!makeResponse.ok && !keycrmResponse.ok) {
+      throw new Error(`Both requests failed`);
     }
 
     btn.textContent = '✓ Заявка отправлена!';
